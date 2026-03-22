@@ -1,0 +1,14 @@
+docker.io/rancher/klipper-helm:v0.9.14-build20260210
+docker.io/rancher/klipper-helm@sha256:2d6c98a07cae39f1bd3bc8405b1b26aff3291b934569cd8dc0c974ba0f356dba
+docker.io/rancher/local-path-provisioner:v0.0.34
+docker.io/rancher/local-path-provisioner@sha256:6ff68ebe98bc623b45ad22c28be84f8a08214982710f3247d5862e9bccce73ef
+docker.io/rancher/mirrored-library-busybox:1.37.0
+docker.io/rancher/mirrored-library-busybox@sha256:101b4afd76732482eff9b95cae5f94bcf295e521fbec4e01b69c5421f3f3f3e5
+docker.io/rancher/mirrored-metrics-server:v0.8.1
+docker.io/rancher/mirrored-metrics-server@sha256:b2d2efaf5ac3b366ed0f839d2412a2c4279d4fc2a2a733f12c52133faed36c41
+docker.io/rancher/mirrored-pause:3.6
+docker.io/rancher/mirrored-pause@sha256:74c4244427b7312c5b901fe0f67cbc53683d06f4f24c6faee65d4182bf0fa893
+ghcr.io/nvidia/openshell/gateway:0.0.10
+ghcr.io/nvidia/openshell/gateway@sha256:29eb20f9745f070b116c993c6b8e32d3a52f23e459a73f5c1acfcd88c7df4031
+registry.k8s.io/agent-sandbox/agent-sandbox-controller:v0.1.0
+registry.k8s.io/agent-sandbox/agent-sandbox-controller@sha256:ba71ea40ae0872791197badf2ab84f3f482df3902f1fce7ca9e076b1de9b57f6
