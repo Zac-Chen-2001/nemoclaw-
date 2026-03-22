@@ -44,6 +44,9 @@ if [[ ! -f "${K3S_TAR_PATH}" ]]; then
   exit 1
 fi
 
+# Docker bind mounts in openshell expect absolute host paths.
+K3S_TAR_PATH="$(cd "$(dirname "${K3S_TAR_PATH}")" && pwd)/$(basename "${K3S_TAR_PATH}")"
+
 echo "[4/6] Importing k3s images from ${K3S_TAR_PATH} ..."
 if openshell gateway start --help 2>/dev/null | grep -q -- "--k3s-image-tar"; then
   echo "Skip manual import: k3s preload tar was provided during gateway startup."
