@@ -101,6 +101,12 @@ docker exec openshell-cluster-nemoclaw sh -lc "ctr -n k8s.io images ls | grep -E
 ```
 如果没有任何输出，说明离线包里缺少 `pause` 镜像引用，后续可能触发在线拉取。
 
+强制离线检查（建议执行）：
+```bash
+docker logs openshell-cluster-nemoclaw 2>&1 | grep -Ei "registry-1.docker.io|failed to get sandbox image|i/o timeout" | tail -n 50
+```
+如果仍出现 `registry-1.docker.io` 拉取记录，说明当前环境没有命中离线路径，需要立即停止并排查离线包/覆盖版本。
+
 ## 4. 现场高频问题与处理
 
 ### 问题 A：`git: 'lfs' is not a git command`

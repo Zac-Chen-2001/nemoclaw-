@@ -19,6 +19,13 @@ fi
 # Docker bind mounts in openshell expect absolute host paths.
 K3S_TAR_PATH="$(cd "$(dirname "${K3S_TAR_PATH}")" && pwd)/$(basename "${K3S_TAR_PATH}")"
 
+echo "[0/6] Validating offline tar content..."
+if ! tar -xf "${K3S_TAR_PATH}" -O manifest.json 2>/dev/null | grep -q '"rancher/mirrored-pause:3.6"'; then
+  echo "[ERROR] offline tar missing required image: rancher/mirrored-pause:3.6"
+  echo "k3s will try online pull and fail in restricted networks."
+  exit 1
+fi
+
 echo "[1/6] Starting gateway '${GATEWAY_NAME}' on port ${PORT}..."
 if openshell gateway start --help 2>/dev/null | grep -q -- "--k3s-image-tar"; then
   echo "Detected offline-preload capable openshell; passing k3s tar at gateway start."

@@ -5,6 +5,10 @@
 - Gateway / Sandbox 创建过程中因镜像拉取失败导致安装中断
 - 需要可重复执行、可验证的“半离线/离线优先”流程
 
+当前默认策略为“强制离线优先”：
+- k3s 启动参数包含 `--disable-default-registry-endpoint`
+- 启动脚本会校验离线包必须包含 `rancher/mirrored-pause:3.6`，缺失即失败
+
 ## 快速开始（Ubuntu）
 1. 拉取仓库并下载 LFS 大文件
 ```bash

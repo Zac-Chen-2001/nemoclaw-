@@ -536,6 +536,18 @@ if [ ! -f /sys/fs/cgroup/cgroup.controllers ]; then
     EXTRA_KUBELET_ARGS="--kubelet-arg=fail-cgroupv1=false"
 fi
 
+FORCE_K3S_OFFLINE="${FORCE_K3S_OFFLINE:-true}"
+EXTRA_K3S_ARGS=""
+case "$(printf '%s' "$FORCE_K3S_OFFLINE" | tr '[:upper:]' '[:lower:]')" in
+    1|true|yes|on)
+        echo "FORCE_K3S_OFFLINE enabled: adding --disable-default-registry-endpoint"
+        EXTRA_K3S_ARGS="--disable-default-registry-endpoint"
+        ;;
+    *)
+        echo "FORCE_K3S_OFFLINE disabled: k3s may fallback to default registry endpoints"
+        ;;
+esac
+
 # Docker Desktop can briefly start the container before its bridge default route
 # is fully installed. k3s exits immediately in that state, so wait briefly for
 # routing to settle first.
@@ -543,4 +555,4 @@ wait_for_default_route
 
 # Execute k3s with explicit resolv-conf.
 # shellcheck disable=SC2086
-exec /bin/k3s "$@" --resolv-conf="$RESOLV_CONF" $EXTRA_KUBELET_ARGS
+exec /bin/k3s "$@" --resolv-conf="$RESOLV_CONF" $EXTRA_KUBELET_ARGS $EXTRA_K3S_ARGS
