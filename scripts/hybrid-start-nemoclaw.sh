@@ -10,6 +10,15 @@ PORT="${2:-18080}"
 K3S_TAR_PATH="${3:-./k3s-images.tar}"
 CLUSTER_CONTAINER="openshell-cluster-${GATEWAY_NAME}"
 
+if [[ ! -f "${K3S_TAR_PATH}" ]]; then
+  echo "[ERROR] k3s image tar not found: ${K3S_TAR_PATH}"
+  echo "Usage: $0 [gateway_name] [port] [k3s_images_tar_path]"
+  exit 1
+fi
+
+# Docker bind mounts in openshell expect absolute host paths.
+K3S_TAR_PATH="$(cd "$(dirname "${K3S_TAR_PATH}")" && pwd)/$(basename "${K3S_TAR_PATH}")"
+
 echo "[1/6] Starting gateway '${GATEWAY_NAME}' on port ${PORT}..."
 if openshell gateway start --help 2>/dev/null | grep -q -- "--k3s-image-tar"; then
   echo "Detected offline-preload capable openshell; passing k3s tar at gateway start."
@@ -37,15 +46,6 @@ echo "[3/6] Ensuring cluster container is running..."
 if ! docker ps --format '{{.Names}}' | grep -q "^${CLUSTER_CONTAINER}$"; then
   docker start "${CLUSTER_CONTAINER}" >/dev/null
 fi
-
-if [[ ! -f "${K3S_TAR_PATH}" ]]; then
-  echo "[ERROR] k3s image tar not found: ${K3S_TAR_PATH}"
-  echo "Usage: $0 [gateway_name] [port] [k3s_images_tar_path]"
-  exit 1
-fi
-
-# Docker bind mounts in openshell expect absolute host paths.
-K3S_TAR_PATH="$(cd "$(dirname "${K3S_TAR_PATH}")" && pwd)/$(basename "${K3S_TAR_PATH}")"
 
 echo "[4/6] Importing k3s images from ${K3S_TAR_PATH} ..."
 if openshell gateway start --help 2>/dev/null | grep -q -- "--k3s-image-tar"; then

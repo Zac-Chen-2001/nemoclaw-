@@ -95,6 +95,12 @@ echo "注意: 向导里端口保持 ${PORT}"
 - `openshell gateway info -g nemoclaw` 显示网关健康
 - `nemoclaw onboard` 能继续并完成向导
 
+补充自检（建议执行）：
+```bash
+docker exec openshell-cluster-nemoclaw sh -lc "ctr -n k8s.io images ls | grep -E 'mirrored-pause|rancher/mirrored-pause' || true"
+```
+如果没有任何输出，说明离线包里缺少 `pause` 镜像引用，后续可能触发在线拉取。
+
 ## 4. 现场高频问题与处理
 
 ### 问题 A：`git: 'lfs' is not a git command`
@@ -128,4 +134,3 @@ docker ps -a
 
 - API Key 不要写入仓库，现场输入即可。
 - 你曾在聊天中粘贴过密钥，建议在控制台旋转新 key 后再去公司部署。
-
