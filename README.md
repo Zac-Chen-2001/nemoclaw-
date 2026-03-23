@@ -45,6 +45,8 @@ nemoclaw onboard
   - 仅负责安装改造版 OpenShell（将 `openshell-overrides/` 应用到 OpenShell 源码后构建安装）。
 - `scripts/hybrid-start-nemoclaw.sh`
   - 混合启动脚本（更底层），支持显式传入 gateway 名称、端口、离线 tar 包路径。
+- `scripts/package-openshell-cli-dual-kit.sh`
+  - 打包 OpenShell CLI 双方案（预编译二进制 + 源码兜底包）。
 
 ### `openshell-overrides/`
 - OpenShell 源码覆盖补丁（核心离线能力改造），用于让 k3s 优先/强制使用本地镜像而不是外网拉取。
@@ -58,6 +60,8 @@ nemoclaw onboard
   - 详细手册，包含文件级说明与完整操作链路。
 - `ubuntu-纯净环境一键部署-zh.md`
   - 新增：针对“公司纯净 Ubuntu”从 0 到 PASS 的一步步指令。
+- `openshell-cli-双方案交付-zh.md`
+  - 新增：OpenShell CLI 的 A/B 双方案交付与现场切换方法。
 
 ## 成功判据
 - `verify-k3s-offline-with-latest-nemoclaw.sh` 输出：
